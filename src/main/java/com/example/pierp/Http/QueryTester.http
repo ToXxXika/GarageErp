@@ -1,0 +1,12 @@
+GET http://localhost:8080/personne/allp
+content-type: application/json
+##############################
+POST http://localhost:8080/personne/addp
+content-type: application/json
+{
+    "nom": "toto",
+    "prenom": "titi",
+    "cin": "07220650",
+    "role":"",
+    "numtel":"92652461"
+}
