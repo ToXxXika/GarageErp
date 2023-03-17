@@ -8,7 +8,20 @@ public class Tache {
     private String refClient;
     private String description;
     private String responsable;
+    private String etat;
+
     private Personne personneByResponsable;
+
+    @Basic
+    @Column(name = "etat")
+
+    public String getEtat() {
+        return etat;
+    }
+
+    public void setEtat(String etat) {
+        this.etat = etat;
+    }
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -72,6 +85,7 @@ public class Tache {
         result = 31 * result + (refClient != null ? refClient.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (responsable != null ? responsable.hashCode() : 0);
+        result = 31 * result + (etat != null ? etat.hashCode() : 0);
         return result;
     }
 

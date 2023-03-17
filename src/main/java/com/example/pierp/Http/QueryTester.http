@@ -1,12 +1,14 @@
+### Get all personnes from database
 GET http://localhost:8080/personne/allp
-content-type: application/json
-##############################
+Content-Type: application/json
+#### Add personne to database
 POST http://localhost:8080/personne/addp
-content-type: application/json
+Content-Type: application/json
+
 {
-    "nom": "toto",
-    "prenom": "titi",
-    "cin": "07220650",
-    "role":"",
+    "nom": "Mohamed",
+    "prenom": "Dabebi",
+    "cin": "09618107",
+    "role":"RESPONSABLE",
     "numtel":"92652461"
 }

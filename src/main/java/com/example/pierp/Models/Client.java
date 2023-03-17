@@ -13,7 +13,6 @@ public class Client {
     private Collection<Facture> facturesByRefClient;
     private Collection<Garantie> garantiesByRefClient;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ref_client")
     public String getRefClient() {

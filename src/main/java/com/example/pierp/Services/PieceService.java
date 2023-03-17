@@ -7,10 +7,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface PieceService  {
 
 
-    public boolean addPiece(Piece piece);
+     boolean addPiece(Piece piece);
 
-    public List<Piece> getAllPieces();
+     List<Piece> getAllPieces();
+
+     boolean updatePiece(String reference,int Qte);
+     Piece getPiece(String reference);
+
 }

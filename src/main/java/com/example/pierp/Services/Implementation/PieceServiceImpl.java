@@ -15,8 +15,10 @@ public class PieceServiceImpl implements PieceService {
     public boolean addPiece(Piece piece) {
         try {
             pieceRepository.save(piece);
+            System.out.println("Piece added successfully");
             return true;
         } catch (Exception e) {
+            System.out.println("Cause: "+e.getCause()+" \n Message  : "+e.getMessage());
             return false;
         }
     }
@@ -24,5 +26,24 @@ public class PieceServiceImpl implements PieceService {
     @Override
     public List<Piece> getAllPieces() {
         return pieceRepository.findAll();
+    }
+
+    @Override
+    public boolean updatePiece(String reference,int Qte) {
+        try {
+             Piece piece = pieceRepository.findById(reference).get();
+                piece.setQteStock(piece.getQteStock()-Qte);
+                pieceRepository.saveAndFlush(piece);
+                System.out.println("Piece updated successfully");
+            return true ;
+        } catch (Exception e) {
+            System.out.println("Cause: " + e.getCause() + " \n Message  : " + e.getMessage());
+            return false;
+        }
+    }
+    @Override
+    public Piece getPiece(String reference) {
+
+        return  pieceRepository.findById(reference).get();
     }
 }

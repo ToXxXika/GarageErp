@@ -4,12 +4,14 @@ import com.example.pierp.Models.Personne;
 import com.example.pierp.Services.Implementation.PersonneServiceImpl;
 import com.example.pierp.Services.PersonneService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/personne")
+//@PreAuthorize("hasRole('ADMIN')")
 @CrossOrigin("*")
 public class PersonneController {
 //TODO: we need to verify if th user is connected or not  and if has a specified role to add a task in the system
@@ -19,6 +21,8 @@ public class PersonneController {
     PersonneServiceImpl personneService;
 
     @PostMapping("/addp")
+  //  @PreAuthorize("hasRole('RESPONSABLE')")
+
     public boolean addPersonne(@RequestBody Personne personne){
         return personneService.addPersonne(personne);
     }
