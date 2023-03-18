@@ -1,7 +1,6 @@
 package com.example.pierp.Services;
 
 
-import org.springframework.stereotype.Service;
 import com.example.pierp.Models.Personne;
 
 import java.util.List;

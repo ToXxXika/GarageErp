@@ -12,7 +12,6 @@ public class Garantie {
     private Client clientByRefClient;
     private Voiture voitureByRefVoiture;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ref_garantie")
     public String getRefGarantie() {

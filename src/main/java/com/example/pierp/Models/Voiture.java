@@ -16,7 +16,8 @@ public class Voiture {
     private Collection<Garantie> garantiesByReference;
     private DetailsVoiture detailsVoitureByRefDetails;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Collection<Rapport> rapportsByReference;
+
     @Id
     @Column(name = "reference")
     public String getReference() {
@@ -128,5 +129,14 @@ public class Voiture {
 
     public void setDetailsVoitureByRefDetails(DetailsVoiture detailsVoitureByRefDetails) {
         this.detailsVoitureByRefDetails = detailsVoitureByRefDetails;
+    }
+    @OneToMany(mappedBy = "voitureByRefV")
+
+    public Collection<Rapport> getRapportsByReference() {
+        return rapportsByReference;
+    }
+
+    public void setRapportsByReference(Collection<Rapport> rapportsByReference) {
+        this.rapportsByReference = rapportsByReference;
     }
 }

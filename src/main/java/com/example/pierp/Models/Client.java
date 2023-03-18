@@ -12,6 +12,7 @@ public class Client {
     private Collection<Depannage> depannagesByRefClient;
     private Collection<Facture> facturesByRefClient;
     private Collection<Garantie> garantiesByRefClient;
+    private Collection<Rapport> rapportsByRefClient;
 
     @Id
     @Column(name = "ref_client")
@@ -90,5 +91,14 @@ public class Client {
 
     public void setGarantiesByRefClient(Collection<Garantie> garantiesByRefClient) {
         this.garantiesByRefClient = garantiesByRefClient;
+    }
+
+    @OneToMany(mappedBy = "clientByRefCl")
+    public Collection<Rapport> getRapportsByRefClient() {
+        return rapportsByRefClient;
+    }
+
+    public void setRapportsByRefClient(Collection<Rapport> rapportsByRefClient) {
+        this.rapportsByRefClient = rapportsByRefClient;
     }
 }

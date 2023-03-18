@@ -12,7 +12,7 @@ public class DetailsVoiture {
     private String energie;
     private Integer puissance;
     private Integer nbPlaces;
-    private Integer nPlaque;
+    private String nPlaque;
     private Collection<Voiture> voituresByRefDetails;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,11 +68,11 @@ public class DetailsVoiture {
 
     @Basic
     @Column(name = "n_plaque")
-    public Integer getnPlaque() {
+    public String getnPlaque() {
         return nPlaque;
     }
 
-    public void setnPlaque(Integer nPlaque) {
+    public void setnPlaque(String nPlaque) {
         this.nPlaque = nPlaque;
     }
 

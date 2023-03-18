@@ -14,7 +14,6 @@ public class Facture {
     private Client clientByRefClient;
     private Voiture voitureByRefVoiture;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ref_facture")
     public String getRefFacture() {

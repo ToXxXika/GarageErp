@@ -13,8 +13,8 @@ public class Personne {
     private String role;
     private Role roleByRole;
     private Collection<Tache> tachesByCin;
+    private Collection<Rapport> rapportsByCin;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "cin")
     public String getCin() {
@@ -108,5 +108,14 @@ public class Personne {
 
     public void setTachesByCin(Collection<Tache> tachesByCin) {
         this.tachesByCin = tachesByCin;
+    }
+
+    @OneToMany(mappedBy = "personneByRefP")
+    public Collection<Rapport> getRapportsByCin() {
+        return rapportsByCin;
+    }
+
+    public void setRapportsByCin(Collection<Rapport> rapportsByCin) {
+        this.rapportsByCin = rapportsByCin;
     }
 }

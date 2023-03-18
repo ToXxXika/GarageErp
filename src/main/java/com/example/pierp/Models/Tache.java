@@ -23,7 +23,6 @@ public class Tache {
         this.etat = etat;
     }
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ref_tache")
     public String getRefTache() {

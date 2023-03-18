@@ -2,9 +2,9 @@ package com.example.pierp.Controllers;
 
 import com.example.pierp.Models.Personne;
 import com.example.pierp.Services.Implementation.PersonneServiceImpl;
-import com.example.pierp.Services.PersonneService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,12 +23,18 @@ public class PersonneController {
     @PostMapping("/addp")
   //  @PreAuthorize("hasRole('RESPONSABLE')")
 
-    public boolean addPersonne(@RequestBody Personne personne){
-        return personneService.addPersonne(personne);
+    public ResponseEntity<String> addPersonne(@RequestBody Personne personne){
+         if(personneService.addPersonne(personne)){
+             return new ResponseEntity<>("Personne added successfully", HttpStatus.OK);
+         }
+            return new ResponseEntity<>("Personne already exists or bad query", HttpStatus.BAD_REQUEST);
     }
     @PostMapping("/deletep")
-    public boolean deletePersonne(@RequestParam(name = "cin") String cin){
-        return personneService.deletePersonne(cin);
+    public ResponseEntity<String> deletePersonne(@RequestParam(name = "cin") String cin){
+        if (personneService.deletePersonne(cin)){
+            return new ResponseEntity<>("Personne deleted successfully", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Personne doesn't exist or bad query", HttpStatus.BAD_REQUEST);
     }
     @GetMapping("/allp")
     public List<Personne> getAllPersonnes(){
