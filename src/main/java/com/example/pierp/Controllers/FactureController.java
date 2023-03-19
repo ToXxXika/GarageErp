@@ -7,9 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@PreAuthorize("hasAnyRole('RESPONSABLE','ADMIN')")
 @CrossOrigin("*")
+@PreAuthorize("hasAnyRole('RESPONSABLE','ADMIN')")
 @RequestMapping("/facture")
 public class FactureController {
 
@@ -33,6 +35,10 @@ public class FactureController {
             return ResponseEntity.ok(facture);
         }
         return ResponseEntity.badRequest().body(null);
+    }
+    @GetMapping("/getfactures")
+    public ResponseEntity<List<Facture>> getFactures() throws Exception {
+        return ResponseEntity.ok(factureService.getFactures());
     }
 
 

@@ -11,6 +11,7 @@ public class Personne {
     private String nom;
     private String numtel;
     private String role;
+    private String password;
     private Role roleByRole;
     private Collection<Tache> tachesByCin;
     private Collection<Rapport> rapportsByCin;
@@ -19,6 +20,15 @@ public class Personne {
     @Column(name = "cin")
     public String getCin() {
         return cin;
+    }
+
+    @Column(name = "password")
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setCin(String cin) {

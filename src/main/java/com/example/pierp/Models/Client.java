@@ -1,5 +1,6 @@
 package com.example.pierp.Models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Collection;
@@ -76,6 +77,7 @@ public class Client {
     }
 
     @OneToMany(mappedBy = "clientByRefClient")
+    @JsonManagedReference
     public Collection<Facture> getFacturesByRefClient() {
         return facturesByRefClient;
     }

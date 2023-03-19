@@ -1,5 +1,6 @@
 package com.example.pierp.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -116,6 +117,7 @@ public class Facture {
     }
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "ref_client", referencedColumnName = "ref_client",updatable = false,insertable = false)
     public Client getClientByRefClient() {
         return clientByRefClient;
@@ -126,6 +128,7 @@ public class Facture {
     }
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "ref_voiture", referencedColumnName = "reference",insertable = false,updatable = false)
     public Voiture getVoitureByRefVoiture() {
         return voitureByRefVoiture;

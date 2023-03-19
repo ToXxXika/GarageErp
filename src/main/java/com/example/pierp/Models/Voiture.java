@@ -1,5 +1,6 @@
 package com.example.pierp.Models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Collection;
@@ -104,6 +105,7 @@ public class Voiture {
     }
 
     @OneToMany(mappedBy = "voitureByRefVoiture")
+    @JsonManagedReference
     public Collection<Facture> getFacturesByReference() {
         return facturesByReference;
     }

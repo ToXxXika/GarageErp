@@ -1,16 +1,13 @@
 package com.example.pierp.Services.Implementation;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Base64;
 
 @Service
-public class CommonServices {
+public class CommonServicesImpl {
 
     public String ReferenceGenerator(String prefix){
         switch (prefix){

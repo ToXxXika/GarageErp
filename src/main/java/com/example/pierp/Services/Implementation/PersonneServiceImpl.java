@@ -2,8 +2,10 @@ package com.example.pierp.Services.Implementation;
 
 import com.example.pierp.Models.Personne;
 import com.example.pierp.Repositories.PersonneRepository;
+import com.example.pierp.Security.UserDetails.PersonneDetails;
 import com.example.pierp.Services.PersonneService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,5 +38,17 @@ public class PersonneServiceImpl implements PersonneService {
     public List<Personne> getAllPersonnes() {
         return personneRepository.findAll();
     }
+
+    @Override
+    public Personne loadUserByUsername(String cin) {
+
+       if(personneRepository.findById(cin).isPresent()){
+           System.out.println("personne found");
+           return personneRepository.findById(cin).get();
+       }
+       System.out.println("personne not found");
+         return null;
+    }
+
 
 }

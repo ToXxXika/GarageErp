@@ -1,12 +1,18 @@
 package com.example.pierp.Security;
 
+import com.example.pierp.Security.UserDetails.PersonneDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,45 +24,59 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class SecurityConfig {
 
-    @Autowired
-    private MyBasicAuthenticationEntryPoint authenticationEntryPoint;
+   @Autowired
+   private PersonneDetailsService personneDetailsService;
 
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder bCryptPasswordEncoder) {
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(org.springframework.security.core.userdetails.User.withUsername("admin").password(bCryptPasswordEncoder.encode("admin")).roles("RESPONSABLE").build());
-        return manager;
+    public InMemoryUserDetailsManager userDetailsService(){
+        UserDetails user = User
+                .builder()
+                .username("admin")
+                .password(passwordEncoder().encode("admin"))
+                .roles("ADMIN")
+                .build();
+        UserDetails user2 = User
+                .builder()
+                .username("responsable")
+                .password(passwordEncoder().encode("responsable"))
+                .roles("RESPONSABLE")
+                .build();
+        return new InMemoryUserDetailsManager(user,user2);
     }
+    @Bean
+    public UserDetailsService userDetailsService2(){
+        return personneDetailsService;
+    }
+     @Bean
+     public DaoAuthenticationProvider authenticationProvider(){
+         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+         daoAuthenticationProvider.setUserDetailsService(userDetailsService2());
+         return daoAuthenticationProvider;
+     }
     @Bean
     public  PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf()
-                .disable();
-        http
-                .cors()
-                .and()
-                .authorizeHttpRequests()
-                .requestMatchers("/personne")
-                .permitAll()
-                .anyRequest()
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/personne/logout",HttpMethod.POST.toString()))
-                .and()
-                .httpBasic()
-                .and()
-                .csrf()
-                .disable();
-        http
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+       http
+               .csrf().disable()
+               .cors().and()
+                .authorizeHttpRequests((aux)->aux
+                        .requestMatchers(new AntPathRequestMatcher("/tache/**")).hasAnyAuthority("RESPONSABLE","ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/facture/**")).hasAnyAuthority("RESPONSABLE","ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/garantie/**")).hasAnyAuthority("RESPONSABLE","ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/piece/**")).hasAnyAuthority("RESPONSABLE","ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/client/**")).hasAnyAuthority("RESPONSABLE","ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/vehicule/**")).hasAnyAuthority("RESPONSABLE","ADMIN")
+
+                        .anyRequest().authenticated()
+                )
+               .httpBasic(Customizer.withDefaults())
+               .authenticationProvider(authenticationProvider());
         return http.build();
+
     }
 
 
