@@ -1,14 +1,20 @@
 package com.example.pierp.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @Entity
-public class Role {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "refRole")
+public class Role  {
     private String refRole;
     private String description;
-    private Collection<Personne> personnesByRefRole;
+    private List<Personne> personnesByRefRole;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -52,11 +58,11 @@ public class Role {
     }
 
     @OneToMany(mappedBy = "roleByRole")
-    public Collection<Personne> getPersonnesByRefRole() {
+    public List<Personne> getPersonnesByRefRole() {
         return personnesByRefRole;
     }
 
-    public void setPersonnesByRefRole(Collection<Personne> personnesByRefRole) {
+    public void setPersonnesByRefRole(List<Personne> personnesByRefRole) {
         this.personnesByRefRole = personnesByRefRole;
     }
 }

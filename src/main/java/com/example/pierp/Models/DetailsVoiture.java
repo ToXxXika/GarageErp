@@ -1,10 +1,13 @@
 package com.example.pierp.Models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.util.Collection;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "refDetails")
 @Table(name = "details_voiture", schema = "pierp", catalog = "")
 public class DetailsVoiture {
     private String refDetails;

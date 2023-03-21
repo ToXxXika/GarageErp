@@ -1,11 +1,15 @@
 package com.example.pierp.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.util.Collection;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "reference")
 public class Voiture {
     private String reference;
     private String modele;
@@ -105,7 +109,6 @@ public class Voiture {
     }
 
     @OneToMany(mappedBy = "voitureByRefVoiture")
-    @JsonManagedReference
     public Collection<Facture> getFacturesByReference() {
         return facturesByReference;
     }
@@ -133,7 +136,6 @@ public class Voiture {
         this.detailsVoitureByRefDetails = detailsVoitureByRefDetails;
     }
     @OneToMany(mappedBy = "voitureByRefV")
-
     public Collection<Rapport> getRapportsByReference() {
         return rapportsByReference;
     }

@@ -1,16 +1,19 @@
 ### Get all personnes from database
 GET http://localhost:8080/personne/allp
+Authorization: Basic MDk2MTgxMDc6MTIz
 Content-Type: application/json
 #### Add personne to database
 POST http://localhost:8080/personne/addp
+Authorization: Basic MDk2MTgxMDc6MTIz
 Content-Type: application/json
 
 {
-    "nom": "Mohamed",
-    "prenom": "Dabebi",
-    "cin": "09618107",
-    "role":"RESPONSABLE",
-    "numtel":"92652461"
+  "nom": "Maryem",
+  "prenom": "Ben younes",
+  "cin": "06214291",
+  "role": "ADMIN",
+  "numtel": "92652461",
+  "password": "123"
 }
 ### Get all Factures
 GET http://localhost:8080/facture/getfactures

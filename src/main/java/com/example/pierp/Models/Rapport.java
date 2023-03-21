@@ -1,8 +1,13 @@
 package com.example.pierp.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "refRapport")
 @Table(name = "rapport", schema = "pierp")
 public class Rapport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,13 +39,14 @@ public class Rapport {
     @Column(name = "ref_professionel")
     private String refProfessionel;
     @ManyToOne
-    @JoinColumn(name = "ref_client", referencedColumnName = "ref_client", nullable = false,insertable = false,updatable = false)
+    @JoinColumn(name = "ref_client", referencedColumnName = "ref_client", nullable = false, insertable = false, updatable = false)
     private Client clientByRefCl;
     @ManyToOne
-    @JoinColumn(name = "ref_voiture", referencedColumnName = "reference", nullable = false,insertable = false,updatable = false)
+    @JoinColumn(name = "ref_voiture", referencedColumnName = "reference", nullable = false, insertable = false, updatable = false)
     private Voiture voitureByRefV;
+
     @ManyToOne
-    @JoinColumn(name = "ref_professionel", referencedColumnName = "cin",nullable = false,insertable = false,updatable = false)
+    @JoinColumn(name = "ref_professionel", referencedColumnName = "cin", nullable = false, insertable = false, updatable = false)
     private Personne personneByRefP;
 
     public String getRefRapport() {

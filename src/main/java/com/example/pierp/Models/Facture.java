@@ -1,9 +1,13 @@
 package com.example.pierp.Models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "refFacture")
 public class Facture {
     private String refFacture;
     private String dateFacture;
@@ -117,7 +121,6 @@ public class Facture {
     }
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "ref_client", referencedColumnName = "ref_client",updatable = false,insertable = false)
     public Client getClientByRefClient() {
         return clientByRefClient;
@@ -128,7 +131,6 @@ public class Facture {
     }
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "ref_voiture", referencedColumnName = "reference",insertable = false,updatable = false)
     public Voiture getVoitureByRefVoiture() {
         return voitureByRefVoiture;

@@ -1,40 +1,46 @@
 package com.example.pierp.Models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Produit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private int id;
     @Basic
-    @Column(name = "nom")
+    @Column(name = "nom", nullable = true, length = 255)
     private String nom;
     @Basic
-    @Column(name = "description")
+    @Column(name = "description", nullable = true, length = -1)
     private String description;
     @Basic
-    @Column(name = "reference_fabricant")
+    @Column(name = "reference_fabricant", nullable = true, length = 255, insertable = false, updatable = false)
     private String referenceFabricant;
     @Basic
-    @Column(name = "reference_interne")
+    @Column(name = "reference_interne", nullable = true, length = 255)
     private String referenceInterne;
     @Basic
-    @Column(name = "quantite")
+    @Column(name = "quantite", nullable = true)
     private Integer quantite;
     @Basic
-    @Column(name = "prix_unitaire")
+    @Column(name = "prix_unitaire", nullable = true, precision = 2)
     private BigDecimal prixUnitaire;
     @Basic
-    @Column(name = "date_ajout")
+    @Column(name = "date_ajout", nullable = true)
     private Timestamp dateAjout;
     @Basic
-    @Column(name = "categorie")
+    @Column(name = "categorie", nullable = true, length = 255)
     private String categorie;
+    @ManyToOne
+    @JoinColumn(name = "reference_fabricant", referencedColumnName = "ref_fournisseur")
+    private Fournisseur fournisseurByReferenceFabricant;
 
     public int getId() {
         return id;
@@ -143,5 +149,13 @@ public class Produit {
         result = 31 * result + (dateAjout != null ? dateAjout.hashCode() : 0);
         result = 31 * result + (categorie != null ? categorie.hashCode() : 0);
         return result;
+    }
+
+    public Fournisseur getFournisseurByReferenceFabricant() {
+        return fournisseurByReferenceFabricant;
+    }
+
+    public void setFournisseurByReferenceFabricant(Fournisseur fournisseurByReferenceFabricant) {
+        this.fournisseurByReferenceFabricant = fournisseurByReferenceFabricant;
     }
 }

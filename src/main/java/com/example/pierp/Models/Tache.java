@@ -1,8 +1,14 @@
 package com.example.pierp.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
 import jakarta.persistence.*;
 
 @Entity
+@JsonIdentityInfo(generator = PropertyGenerator.class, property = "refTache")
 public class Tache {
     private String refTache;
     private String refClient;

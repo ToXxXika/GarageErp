@@ -1,11 +1,15 @@
 package com.example.pierp.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.util.Collection;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "refClient")
 public class Client {
     private String refClient;
     private String voiture;
@@ -77,7 +81,6 @@ public class Client {
     }
 
     @OneToMany(mappedBy = "clientByRefClient")
-    @JsonManagedReference
     public Collection<Facture> getFacturesByRefClient() {
         return facturesByRefClient;
     }

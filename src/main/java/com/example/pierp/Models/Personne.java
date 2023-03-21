@@ -1,10 +1,13 @@
 package com.example.pierp.Models;
 
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "cin")
 public class Personne {
     private String cin;
     private String prenom;
@@ -13,7 +16,7 @@ public class Personne {
     private String role;
     private String password;
     private Role roleByRole;
-    private Collection<Tache> tachesByCin;
+    private List<Tache> tachesByCin;
     private Collection<Rapport> rapportsByCin;
 
     @Id
@@ -102,7 +105,7 @@ public class Personne {
     }
 
     @ManyToOne
-    @JoinColumn(name = "role", referencedColumnName = "ref_role",updatable = false,insertable = false)
+    @JoinColumn(name = "role", referencedColumnName = "ref_role", updatable = false, insertable = false)
     public Role getRoleByRole() {
         return roleByRole;
     }
@@ -112,11 +115,11 @@ public class Personne {
     }
 
     @OneToMany(mappedBy = "personneByResponsable")
-    public Collection<Tache> getTachesByCin() {
+    public List<Tache> getTachesByCin() {
         return tachesByCin;
     }
 
-    public void setTachesByCin(Collection<Tache> tachesByCin) {
+    public void setTachesByCin(List<Tache> tachesByCin) {
         this.tachesByCin = tachesByCin;
     }
 
