@@ -9,7 +9,6 @@ import java.sql.Timestamp;
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Workflow {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false, length = 255)
     private String id;
@@ -33,9 +32,11 @@ public class Workflow {
     @Basic
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
+    @Lob
     @Basic
     @Column(name = "p_avant", nullable = false)
     private byte[] pAvant;
+    @Lob
     @Basic
     @Column(name = "p_apres", nullable = true)
     private byte[] pApres;
@@ -126,6 +127,7 @@ public class Workflow {
         result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
         return result;
     }
+
 
     public byte[] getpAvant() {
         return pAvant;

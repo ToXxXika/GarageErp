@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
 @PreAuthorize("hasAnyAuthority('RESPONSABLE','ADMIN','PARTENAIRE','COMMERCIAL','TECHNICIEN')")
 @RequestMapping("/client")
@@ -30,4 +32,6 @@ public class ClientController {
         }
         return new ResponseEntity<>("client already exists or bad query", HttpStatus.BAD_REQUEST);
     }
+
+
 }

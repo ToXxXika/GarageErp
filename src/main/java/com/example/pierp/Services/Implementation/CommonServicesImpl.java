@@ -21,11 +21,8 @@ public class CommonServicesImpl {
     }
     public byte[] photoToByte(String photo)  {
        try{
-
-           JSONObject jsonpObject = new JSONObject(photo);
-           String base64Image = jsonpObject.getString("photo");
            FileOutputStream fos = new FileOutputStream("C:\\Users\\mabro\\IdeaProjects\\GarageErp\\src\\main\\java\\com\\example\\pierp\\Assets\\test.jpg");
-           byte[] variable =  Base64.getDecoder().decode(base64Image);
+           byte[] variable =  Base64.getDecoder().decode(photo);
            fos.write(variable);
            fos.close();
            return variable ;

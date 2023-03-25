@@ -1,6 +1,7 @@
 package com.example.pierp.Security;
 
 import com.example.pierp.Security.UserDetails.PersonneDetailsService;
+import jakarta.websocket.ClientEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
+
 @Configuration
 public class SecurityConfig {
 
@@ -38,7 +40,19 @@ public class SecurityConfig {
                 .password(passwordEncoder().encode("responsable"))
                 .roles("RESPONSABLE")
                 .build();
-        return new InMemoryUserDetailsManager(user,user2);
+        UserDetails user3 = User
+                .builder()
+                .username("Houssema")
+                .password(passwordEncoder().encode("Zammali"))
+                .roles("TECHNICIEN")
+                .build();
+        UserDetails user4 = User
+                .builder()
+                .username("Maissa")
+                .password(passwordEncoder().encode("Jhonny"))
+                .roles("TAPISSIER")
+                .build();
+        return new InMemoryUserDetailsManager(user,user2,user3,user4);
     }
     @Bean
     public UserDetailsService userDetailsService2(){

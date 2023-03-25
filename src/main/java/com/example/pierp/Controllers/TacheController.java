@@ -1,6 +1,7 @@
 package com.example.pierp.Controllers;
 
 
+import com.example.pierp.Models.WorkflowBuilder;
 import com.example.pierp.Models.Workflow;
 import com.example.pierp.Services.Implementation.WorkflowServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,17 @@ public class TacheController {
     @PostMapping("/flow/addworkflow")
     //  @PreAuthorize("hasAnyRole('RESPONSABLE','ADMIN')")
     public ResponseEntity<String> addPhoto(@RequestBody Workflow workflow, @RequestParam(name = "jpg") String photo) throws IOException {
+        if (workflowService.AddWorkflow(workflow, photo)) {
+            return ResponseEntity.ok("Workflow added successfully");
+        }
+        return ResponseEntity.badRequest().body("Error while adding the workflow");
+
+    }
+    @PostMapping("/flow/test")
+    public ResponseEntity<String> addPhoto2(@RequestBody WorkflowBuilder workflowBuilder){
+        String photo  = workflowBuilder.getPhoto();
+        Workflow workflow= workflowBuilder.getWorkflow();
+        System.out.println(workflow);
         if (workflowService.AddWorkflow(workflow, photo)) {
             return ResponseEntity.ok("Workflow added successfully");
         }

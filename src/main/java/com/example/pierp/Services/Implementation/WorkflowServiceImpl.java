@@ -6,6 +6,8 @@ import com.example.pierp.Services.WorkflowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class WorkflowServiceImpl implements WorkflowService {
 
@@ -13,10 +15,11 @@ public class WorkflowServiceImpl implements WorkflowService {
     WorkflowRepository workflowRepository;
     @Autowired
     CommonServicesImpl commonServicesImpl;
+
     @Override
-    public boolean AddWorkflow(Workflow workflow,String photo) {
+    public boolean AddWorkflow(Workflow workflow, String photo) {
         try {
-         //TODO : we need to  maintin this function  after adding the workflow
+            //TODO : we need to  maintin this function  after adding the workflow
             byte[] photoByte = commonServicesImpl.photoToByte(photo);
             workflow.setpAvant(photoByte);
             workflow.setpApres(null); /* this will be updated later when the status of the workflow is changed*/
@@ -28,15 +31,38 @@ public class WorkflowServiceImpl implements WorkflowService {
         }
     }
 
+
     @Override
     public String VerifyWorkflowStatus(String reference) {
         Workflow workflow = workflowRepository.findById(reference).get();
         // TODO : can make a problem here if the workflow is not found
-        if(workflow == null){
+        if (Objects.requireNonNull(workflow).getStatus() == null) {
             return "Workflow not found";
         }
 
-            return workflow.getStatus().toString();
+        return workflow.getStatus().toString();
 
+    }
+
+    @Override
+    public boolean UpdateWorkflowStatus(String reference, String status) {
+        try {
+            Workflow workflow;
+            if (workflowRepository.findById(reference).isPresent()) {
+                workflow = workflowRepository.findById(reference).get();
+                workflow.setStatus(status);
+                workflowRepository.saveAndFlush(workflow);
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            System.out.println("Cause: " + e.getCause() + " \n Message  : " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean UpdateWorkFlowImage(String reference, String photo) {
+        return false;
     }
 }
