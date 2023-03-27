@@ -1,8 +1,10 @@
 package com.example.pierp.Controllers;
 
 
+import com.example.pierp.Models.Tache;
 import com.example.pierp.Models.WorkflowBuilder;
 import com.example.pierp.Models.Workflow;
+import com.example.pierp.Services.Implementation.TacheServiceImpl;
 import com.example.pierp.Services.Implementation.WorkflowServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,36 @@ public class TacheController {
 
     @Autowired
     WorkflowServiceImpl workflowService;
+
+    @Autowired
+    TacheServiceImpl tacheService;
+
+
+    @PostMapping("/addtache")
+    public ResponseEntity<String> addTache(@RequestBody Tache tache){
+        if (tacheService.ajouterTache(tache)) {
+            return ResponseEntity.ok("Tache added successfully");
+        }
+        return ResponseEntity.badRequest().body("Error while adding the tache");
+    }
+    @GetMapping("/get_taches_byuser")
+    public ResponseEntity<?> getTachesByUser(@RequestParam(name = "username") String username){
+        return ResponseEntity.ok(tacheService.getTachesByUser(username));
+    }
+    @DeleteMapping("/deletetache")
+    public ResponseEntity<String> deleteTache(@RequestParam(name = "reference") String reference){
+        if (tacheService.supprimerTache(reference)) {
+            return ResponseEntity.ok("Tache deleted successfully");
+        }
+        return ResponseEntity.badRequest().body("Error while deleting the tache");
+    }
+    @PutMapping("/updatetache")
+    public ResponseEntity<String> updateTache(@RequestParam(name = "reference") String reference, @RequestParam(name = "etat") String etat){
+        if (tacheService.modifierEtatTache(reference, etat)) {
+            return ResponseEntity.ok("Tache updated successfully");
+        }
+        return ResponseEntity.badRequest().body("Error while updating the tache");
+    }
 
     @PostMapping("/flow/addworkflow")
     //  @PreAuthorize("hasAnyRole('RESPONSABLE','ADMIN')")
@@ -49,6 +81,20 @@ public class TacheController {
         } else {
             return ResponseEntity.ok(status);
         }
+    }
+    @PutMapping("/flow/updateworkflow")
+    public ResponseEntity<String> updateWorkflow(@RequestParam(name = "reference") String reference, @RequestParam(name = "status") String status) {
+        if (workflowService.UpdateWorkflowStatus(reference, status)) {
+            return ResponseEntity.ok("Workflow status updated successfully");
+        }
+        return ResponseEntity.badRequest().body("verify updateworkflow method in workflow controller");
+    }
+    @PutMapping("/flow/update_workflow_image")
+    public ResponseEntity<String> updateWorkflowImage(@RequestParam(name = "reference") String reference, @RequestParam(name = "jpg") String photo) throws IOException {
+        if (workflowService.UpdateWorkFlowImage(reference, photo)) {
+            return ResponseEntity.ok("Workflow image updated successfully");
+        }
+        return ResponseEntity.badRequest().body("verify updateworkflow method in workflow controller");
     }
 
 }

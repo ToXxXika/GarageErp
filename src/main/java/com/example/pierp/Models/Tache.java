@@ -6,9 +6,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
 @JsonIdentityInfo(generator = PropertyGenerator.class, property = "refTache")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Tache {
     private String refTache;
     private String refClient;
@@ -17,6 +21,12 @@ public class Tache {
     private String etat;
 
     private Personne personneByResponsable;
+    @Basic
+    @Column(name = "profession", nullable = false, length = 255)
+    private String profession;
+    @ManyToOne
+    @JoinColumn(name = "profession", referencedColumnName = "cin", nullable = false,insertable = false,updatable = false)
+    private Personne personneByProfession;
 
     @Basic
     @Column(name = "etat")
@@ -102,5 +112,21 @@ public class Tache {
 
     public void setPersonneByResponsable(Personne personneByResponsable) {
         this.personneByResponsable = personneByResponsable;
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+    public Personne getPersonneByProfession() {
+        return personneByProfession;
+    }
+
+    public void setPersonneByProfession(Personne personneByProfession) {
+        this.personneByProfession = personneByProfession;
     }
 }

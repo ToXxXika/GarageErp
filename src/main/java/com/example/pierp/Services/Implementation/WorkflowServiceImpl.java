@@ -63,6 +63,18 @@ public class WorkflowServiceImpl implements WorkflowService {
 
     @Override
     public boolean UpdateWorkFlowImage(String reference, String photo) {
-        return false;
+        try {
+               if(workflowRepository.findById(reference).isPresent()) {
+                   Workflow workflow = workflowRepository.findById(reference).get();
+                   byte[] photoByte = commonServicesImpl.photoToByte(photo);
+                   workflow.setpApres(photoByte);
+                   workflowRepository.save(workflow);
+                   return true;
+               }
+               return false ;
+        } catch (Exception e) {
+            System.out.println("Cause: " + e.getCause() + " \n Message  : " + e.getMessage());
+            return false;
+        }
     }
 }

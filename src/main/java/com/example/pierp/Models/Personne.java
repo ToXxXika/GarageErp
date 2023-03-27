@@ -18,11 +18,17 @@ public class Personne {
     private Role roleByRole;
     private List<Tache> tachesByCin;
     private Collection<Rapport> rapportsByCin;
+    @OneToMany(mappedBy = "personneByProfession")
+    private Collection<Tache> tachesByCin_0;
 
     @Id
     @Column(name = "cin")
     public String getCin() {
         return cin;
+    }
+
+    public void setCin(String cin) {
+        this.cin = cin;
     }
 
     @Column(name = "password")
@@ -32,10 +38,6 @@ public class Personne {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setCin(String cin) {
-        this.cin = cin;
     }
 
     @Basic
@@ -130,5 +132,13 @@ public class Personne {
 
     public void setRapportsByCin(Collection<Rapport> rapportsByCin) {
         this.rapportsByCin = rapportsByCin;
+    }
+
+    public Collection<Tache> getTachesByCin_0() {
+        return tachesByCin_0;
+    }
+
+    public void setTachesByCin_0(Collection<Tache> tachesByCin_0) {
+        this.tachesByCin_0 = tachesByCin_0;
     }
 }
